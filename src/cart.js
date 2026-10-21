@@ -35,8 +35,32 @@ function addToCart(cart, product, quantity) {
   return [...cart, cartItem];
 }
 
+function changeQuantity(cart, id, quantity) {
+  const result = cart.find((el) => {
+    return el.id === id;
+  });
 
-function changeQuantity() { return notImplemented(); }
+  if (!result) {
+    return [...cart];
+  }
+
+  if (quantity <= 0) {
+    throw new RangeError('Количество должно быть больше нуля');
+  }
+
+  if (quantity > result.stock) {
+    throw new RangeError('Недостаточно товара на складе');
+  }
+
+  return cart.map((el) => {
+    if (el.id === id) {
+      return { ...el, quantity };
+    }
+
+    return el;
+  });
+}
+
 function removeFromCart() { return notImplemented(); }
 function calculateCartSubtotal() { return notImplemented(); }
 function calculateOrderTotal() { return notImplemented(); }
